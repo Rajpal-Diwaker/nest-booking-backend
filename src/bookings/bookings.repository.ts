@@ -19,10 +19,11 @@ export class BookingsRepository extends Repository<Booking> {
     createTaskDTO: CreateBookingDTO,
     user: User,
   ): Promise<Booking> {
-    const { notes, startTime, duration, room } = createTaskDTO;
+    const { notes, startTime, endTime, duration, room } = createTaskDTO;
     const booking = await this.create({
       notes,
       startTime,
+      endTime,
       status: BookingStatus.BOOKED,
       duration,
       room,

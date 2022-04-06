@@ -22,6 +22,9 @@ export class Booking {
   @Column({ type: 'timestamptz' })
   startTime: Date;
 
+  @Column({ type: 'timestamptz' })
+  endTime: Date;
+
   @Column()
   status: BookingStatus;
 

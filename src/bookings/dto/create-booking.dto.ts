@@ -10,6 +10,9 @@ export class CreateBookingDTO {
   startTime: Date;
 
   @IsNotEmpty()
+  endTime: Date;
+
+  @IsNotEmpty()
   duration: number;
 
   @IsNotEmpty()
