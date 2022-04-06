@@ -11,7 +11,7 @@ import { BookingsModule } from './bookings/bookings.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [`.env.stage.dev`],
+      // envFilePath: [`.env.stage.dev`],
       validationSchema: configValidationSchema,
     }),
     TypeOrmModule.forRootAsync({
