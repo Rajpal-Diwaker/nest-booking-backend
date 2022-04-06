@@ -1,5 +1,5 @@
 import { Booking } from 'src/bookings/bookings.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { RoomStatus } from './enum/room-status.enum';
 import { RoomType } from './enum/room-type.enum';
 
@@ -29,6 +29,6 @@ export class Room {
   @Column()
   image: string;
 
-  //   @OneToOne(() => Booking, (booking: Booking) => booking.room)
-  //   booking: ;
+  @OneToMany(() => Booking, (booking: Booking) => booking.room)
+  bookings: Booking[];
 }

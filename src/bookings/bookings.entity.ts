@@ -7,6 +7,7 @@ import {
   JoinColumn,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { BookingStatus } from './enum/booking-status.enum';
@@ -35,9 +36,6 @@ export class Booking {
   @Exclude({ toPlainOnly: true })
   user: User;
 
-  @ManyToMany(() => Room, {
-    eager: true,
-  })
-  @JoinColumn()
+  @OneToMany(() => Room, (room) => room.bookings)
   room: Room;
 }
