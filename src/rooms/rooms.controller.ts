@@ -27,8 +27,12 @@ export class RoomsController {
   constructor(private roomService: RoomsService) {}
 
   @Get()
-  getRooms(@Query() filterDto: GetRoomsFilterDto): Promise<Room[]> {
-    return this.roomService.getRooms(filterDto);
+  getRooms(
+    @Query() filterDto: GetRoomsFilterDto,
+    @GetUser() user: User,
+  ): Promise<Room[]> {
+    const { organisation } = user;
+    return this.roomService.getRooms(organisation.id, filterDto);
   }
 
   @Get('/:id')

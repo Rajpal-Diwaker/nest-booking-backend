@@ -14,4 +14,8 @@ export class GetRoomsFilterDto {
   @IsOptional()
   @IsString()
   search?: string;
+
+  @IsOptional()
+  @IsString()
+  organisation?: string;
 }

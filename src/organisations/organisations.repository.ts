@@ -35,12 +35,11 @@ export class OrganisationsRepository extends Repository<Organisation> {
 
   async fetchAll(): Promise<Organisation[]> {
     try {
-      const tasks = await this.find();
-      //   const count = await this.createQueryBuilder('organisation')
-      //     .loadRelationCountAndMap('organisation.count', 'organisation.users')
-      //     .getMany();
-      //   console.log(count);
-      return tasks;
+      const query = this.createQueryBuilder('organisation');
+      const organisation = await query
+        .leftJoinAndSelect('organisation.rooms', 'rooms')
+        .getMany();
+      return organisation;
     } catch (error) {
       this.logger.error(`Failed to get organisations, ${error}`);
       throw new InternalServerErrorException();

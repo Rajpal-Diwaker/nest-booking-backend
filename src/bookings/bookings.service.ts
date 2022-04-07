@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -11,6 +12,9 @@ import { Booking } from './bookings.entity';
 import { CreateBookingDTO } from './dto/create-booking.dto';
 import { GetBookingsFilterDto } from './dto/get-booking-filter.dto';
 import { BookingStatus } from './enum/booking-status.enum';
+import { GetBookingsByRoomDto } from './dto/get-booking-filter-by-room.dto';
+import * as Moment from 'moment';
+import { extendMoment } from 'moment-range';
 
 @Injectable()
 export class BookingsService {
@@ -26,6 +30,31 @@ export class BookingsService {
   ): Promise<Booking[]> {
     try {
       return await this.bookingsRepository.fetchAll(user, filterDto);
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async getBookingsByRoom(
+    room: string,
+    filterDto?: GetBookingsByRoomDto,
+  ): Promise<Booking[]> {
+    try {
+      return await this.bookingsRepository.fetchAllByRoom(room, filterDto);
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async getBookingsByOrganisation(
+    id: string,
+    filterDto?: GetBookingsByRoomDto,
+  ): Promise<Booking[]> {
+    try {
+      return await this.bookingsRepository.fetchAllByOrganisation(
+        id,
+        filterDto,
+      );
     } catch (error) {
       throw new InternalServerErrorException();
     }
@@ -52,7 +81,34 @@ export class BookingsService {
   async createBooking(
     createBookingDTO: CreateBookingDTO,
     user: User,
+    bookings: Booking[],
   ): Promise<Booking> {
-    return await this.bookingsRepository.createOne(createBookingDTO, user);
+    let isOverlap = false;
+    for (let i = 0; i < bookings.length; i++) {
+      isOverlap = this.checkTimeBetweenRange(
+        bookings[i].startTime,
+        bookings[i].endTime,
+        createBookingDTO.startTime,
+        createBookingDTO.endTime,
+      );
+      if (isOverlap) {
+        break;
+      }
+    }
+    if (!isOverlap)
+      return await this.bookingsRepository.createOne(createBookingDTO, user);
+    throw new BadRequestException('time period overlap');
+  }
+
+  checkTimeBetweenRange(startTime, endTime, checkStartTime, checkEndTime) {
+    const moment = extendMoment(Moment);
+    const range1 = moment.range(startTime, endTime);
+    const range2 = moment.range(checkStartTime, checkEndTime);
+
+    if (range1.overlaps(range2)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

@@ -1,5 +1,13 @@
 import { Booking } from 'src/bookings/bookings.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Organisation } from 'src/organisations/organisations.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { RoomStatus } from './enum/room-status.enum';
 import { RoomType } from './enum/room-type.enum';
 
@@ -29,6 +37,11 @@ export class Room {
   @Column()
   image: string;
 
+  @ManyToOne(() => Organisation, (organisation) => organisation.rooms)
+  @JoinColumn({ name: 'organisation', referencedColumnName: 'id' })
+  organisation: Organisation;
+
   @OneToMany(() => Booking, (booking: Booking) => booking.room)
+  @JoinColumn()
   bookings: Booking[];
 }

@@ -9,14 +9,22 @@ import { Logger } from '@nestjs/common';
 import { Room } from './rooms.entity';
 import { CreateRoomDTO } from './dto/create-room.dto';
 import { RoomStatus } from './enum/room-status.enum';
+import { Organisation } from 'src/organisations/organisations.entity';
 
 @EntityRepository(Room)
 export class RoomsRepository extends Repository<Room> {
   private logger = new Logger('RoomRepository', { timestamp: true });
 
   async createOne(createTaskDTO: CreateRoomDTO): Promise<Room> {
-    const { name, description, type, minCapacity, maxCapacity, image } =
-      createTaskDTO;
+    const {
+      name,
+      description,
+      type,
+      minCapacity,
+      maxCapacity,
+      image,
+      organisation,
+    } = createTaskDTO;
     const room = await this.create({
       name,
       description,
@@ -25,6 +33,7 @@ export class RoomsRepository extends Repository<Room> {
       minCapacity,
       maxCapacity,
       image,
+      organisation,
     });
     await this.save(room);
     return room;
@@ -38,7 +47,7 @@ export class RoomsRepository extends Repository<Room> {
     await this.update(id, { status });
   }
 
-  async fetchAll(filterDto?: GetRoomsFilterDto): Promise<Room[]> {
+  async fetchAll(id: string, filterDto?: GetRoomsFilterDto): Promise<Room[]> {
     const { status, search, type } = filterDto;
     const query = this.createQueryBuilder('room');
 
@@ -47,7 +56,7 @@ export class RoomsRepository extends Repository<Room> {
     }
 
     if (type) {
-      query.andWhere('room.type = :type', { status });
+      query.andWhere('room.type = :type', { type });
     }
 
     if (search) {
@@ -57,8 +66,17 @@ export class RoomsRepository extends Repository<Room> {
       );
     }
     try {
-      const tasks = await query.getMany();
-      return tasks;
+      if (id) {
+        return await query
+          .leftJoinAndSelect('room.organisation', 'organisation')
+          .where('organisation.id = :id', { id })
+          .getMany();
+      } else {
+        const room = await query
+          .leftJoinAndSelect('room.organisation', 'organisation')
+          .getMany();
+        return room;
+      }
     } catch (error) {
       this.logger.error(`Failed to get room, error: ${error.stack}`);
       throw new InternalServerErrorException();

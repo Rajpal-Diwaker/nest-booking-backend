@@ -20,11 +20,11 @@ export class Booking {
   @Column()
   notes: string;
 
-  @Column({ type: 'timestamptz' })
-  startTime: Date;
+  @Column()
+  startTime: string;
 
-  @Column({ type: 'timestamptz' })
-  endTime: Date;
+  @Column()
+  endTime: string;
 
   @Column()
   status: BookingStatus;
@@ -36,6 +36,10 @@ export class Booking {
   @Exclude({ toPlainOnly: true })
   user: User;
 
-  @OneToMany(() => Room, (room) => room.bookings)
+  @ManyToOne(() => Room, (room) => room.bookings)
+  @JoinColumn()
   room: Room;
+
+  @Column()
+  organisation: string;
 }

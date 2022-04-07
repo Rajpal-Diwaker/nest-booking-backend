@@ -28,7 +28,7 @@ export class User {
   booking: Booking[];
 
   @ManyToOne((_type) => Organisation, (organisation) => organisation.users, {
-    eager: false,
+    eager: true,
   })
   //   @Exclude({ toPlainOnly: true })
   organisation: Organisation;

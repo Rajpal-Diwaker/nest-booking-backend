@@ -21,6 +21,7 @@ import { Booking } from './bookings.entity';
 import { BookingsService } from './bookings.service';
 import { GetBookingsFilterDto } from './dto/get-booking-filter.dto';
 import { UpdateBookingDTO } from './dto/update-booking-status.dto';
+import { GetBookingsByRoomDto } from './dto/get-booking-filter-by-room.dto';
 
 @Controller('bookings')
 @UseGuards(AuthGuard(), RolesGuard)
@@ -36,6 +37,23 @@ export class BookingsController {
     return this.bookingsService.getBookings(user, filterDto);
   }
 
+  @Get('/room')
+  getBookingsByRoom(
+    @Query() filterDto: GetBookingsByRoomDto,
+  ): Promise<Booking[]> {
+    const { id } = filterDto;
+    return this.bookingsService.getBookingsByRoom(id);
+  }
+
+  @Get('/org')
+  getBookingsByOrganisation(
+    @Query() filterDto: GetBookingsByRoomDto,
+    @GetUser() user: User,
+  ): Promise<Booking[]> {
+    const { organisation } = user;
+    return this.bookingsService.getBookingsByOrganisation(organisation.id);
+  }
+
   @Get('/:id')
   getBookingById(
     @Param('id') id: string,
@@ -45,11 +63,13 @@ export class BookingsController {
   }
 
   @Post()
-  createBooking(
+  async createBooking(
     @Body() createBookingDTO: CreateBookingDTO,
     @GetUser() user: User,
   ): Promise<Booking> {
-    return this.bookingsService.createBooking(createBookingDTO, user);
+    const { room } = createBookingDTO;
+    const bookings = await this.bookingsService.getBookingsByRoom(room as any);
+    return this.bookingsService.createBooking(createBookingDTO, user, bookings);
   }
 
   @Patch('/:id/status')

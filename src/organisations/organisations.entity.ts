@@ -1,6 +1,13 @@
 import { Exclude } from 'class-transformer';
 import { User } from 'src/auth/user.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Room } from 'src/rooms/rooms.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Organisation {
@@ -19,7 +26,13 @@ export class Organisation {
   @Column('numeric', { default: 0 })
   roomsBooked: number;
 
-  @OneToMany((_type) => User, (user) => user.organisation, { eager: true })
+  @OneToMany((_type) => User, (user) => user.organisation, { eager: false })
   @Exclude({ toPlainOnly: true })
   users: User[];
+
+  @OneToMany((_type) => Room, (room) => room.organisation, {
+    eager: true,
+    cascade: true,
+  })
+  rooms: Room[];
 }

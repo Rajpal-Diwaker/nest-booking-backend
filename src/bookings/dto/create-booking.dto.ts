@@ -7,10 +7,10 @@ export class CreateBookingDTO {
   notes: string;
 
   @IsNotEmpty()
-  startTime: Date;
+  startTime: string;
 
   @IsNotEmpty()
-  endTime: Date;
+  endTime: string;
 
   @IsNotEmpty()
   duration: number;

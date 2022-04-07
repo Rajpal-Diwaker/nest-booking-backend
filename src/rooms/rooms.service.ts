@@ -11,6 +11,7 @@ import { GetRoomsFilterDto } from './dto/get-rooms-filter.dto';
 import { Room } from './rooms.entity';
 import { RoomStatus } from './enum/room-status.enum';
 import { CreateRoomDTO } from './dto/create-room.dto';
+import { Organisation } from 'src/organisations/organisations.entity';
 
 @Injectable()
 export class RoomsService {
@@ -20,9 +21,12 @@ export class RoomsService {
     private roomsRepository: RoomsRepository,
   ) {}
 
-  async getRooms(filterDto?: GetRoomsFilterDto): Promise<Room[]> {
+  async getRooms(
+    organisation: string,
+    filterDto?: GetRoomsFilterDto,
+  ): Promise<Room[]> {
     try {
-      return await this.roomsRepository.fetchAll(filterDto);
+      return await this.roomsRepository.fetchAll(organisation, filterDto);
     } catch (error) {
       throw new InternalServerErrorException();
     }
