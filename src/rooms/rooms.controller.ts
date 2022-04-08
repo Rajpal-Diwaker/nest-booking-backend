@@ -11,9 +11,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/auth/dto/get-user.decorator';
-import { RolesGuard } from 'src/auth/roles.guard';
-import { User } from 'src/auth/user.entity';
+import { GetUser } from '../auth/dto/get-user.decorator';
+import { RolesGuard } from '../auth/roles.guard';
+import { User } from '../auth/user.entity';
 import { CreateRoomDTO } from './dto/create-room.dto';
 import { GetRoomsFilterDto } from './dto/get-rooms-filter.dto';
 import { UpdateRoomDTO } from './dto/update-room-status.dto';

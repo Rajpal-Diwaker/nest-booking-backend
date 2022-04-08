@@ -1,6 +1,6 @@
 import { Exclude } from 'class-transformer';
-import { User } from 'src/auth/user.entity';
-import { Room } from 'src/rooms/rooms.entity';
+import { User } from '../auth/user.entity';
+import { Room } from '../rooms/rooms.entity';
 import {
   Column,
   Entity,

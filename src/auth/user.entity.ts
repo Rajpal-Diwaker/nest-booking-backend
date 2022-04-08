@@ -1,4 +1,3 @@
-import { Task } from '../tasks/task.entity';
 import {
   Column,
   Entity,
@@ -6,9 +5,9 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Organisation } from 'src/organisations/organisations.entity';
+import { Organisation } from '../organisations/organisations.entity';
 import { Exclude } from 'class-transformer';
-import { Booking } from 'src/bookings/bookings.entity';
+import { Booking } from '../bookings/bookings.entity';
 
 @Entity()
 export class User {

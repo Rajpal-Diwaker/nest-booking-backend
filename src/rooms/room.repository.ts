@@ -2,14 +2,14 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { User } from 'src/auth/user.entity';
+import { User } from '../auth/user.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { GetRoomsFilterDto } from './dto/get-rooms-filter.dto';
 import { Logger } from '@nestjs/common';
 import { Room } from './rooms.entity';
 import { CreateRoomDTO } from './dto/create-room.dto';
 import { RoomStatus } from './enum/room-status.enum';
-import { Organisation } from 'src/organisations/organisations.entity';
+import { Organisation } from '../organisations/organisations.entity';
 
 @EntityRepository(Room)
 export class RoomsRepository extends Repository<Room> {

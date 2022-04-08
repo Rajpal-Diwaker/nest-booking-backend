@@ -8,8 +8,8 @@ import { Booking } from './bookings.entity';
 import { CreateBookingDTO } from './dto/create-booking.dto';
 import { BookingStatus } from './enum/booking-status.enum';
 import { GetBookingsFilterDto } from './dto/get-booking-filter.dto';
-import { User } from 'src/auth/user.entity';
-import { Room } from 'src/rooms/rooms.entity';
+import { User } from '../auth/user.entity';
+import { Room } from '../rooms/rooms.entity';
 import { GetBookingsByRoomDto } from './dto/get-booking-filter-by-room.dto';
 
 @EntityRepository(Booking)

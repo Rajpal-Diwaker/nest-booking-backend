@@ -6,7 +6,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { Organisation } from 'src/organisations/organisations.entity';
+import { Organisation } from '../../organisations/organisations.entity';
 import { UserRole } from '../user-role.enum';
 
 export class AuthSignInDTO {

@@ -15,7 +15,7 @@ import { GetUser } from '../auth/dto/get-user.decorator';
 import { User } from '../auth/user.entity';
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { RolesGuard } from 'src/auth/roles.guard';
+import { RolesGuard } from '../auth/roles.guard';
 import { CreateBookingDTO } from './dto/create-booking.dto';
 import { Booking } from './bookings.entity';
 import { BookingsService } from './bookings.service';

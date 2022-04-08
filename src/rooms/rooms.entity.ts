@@ -1,5 +1,5 @@
-import { Booking } from 'src/bookings/bookings.entity';
-import { Organisation } from 'src/organisations/organisations.entity';
+import { Booking } from '../bookings/bookings.entity';
+import { Organisation } from '../organisations/organisations.entity';
 import {
   Column,
   Entity,

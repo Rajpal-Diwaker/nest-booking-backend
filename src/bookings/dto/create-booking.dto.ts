@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
-import { User } from 'src/auth/user.entity';
-import { Room } from 'src/rooms/rooms.entity';
+import { User } from '../../auth/user.entity';
+import { Room } from '../../rooms/rooms.entity';
 
 export class CreateBookingDTO {
   @IsNotEmpty()

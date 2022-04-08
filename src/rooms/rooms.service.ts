@@ -11,7 +11,7 @@ import { GetRoomsFilterDto } from './dto/get-rooms-filter.dto';
 import { Room } from './rooms.entity';
 import { RoomStatus } from './enum/room-status.enum';
 import { CreateRoomDTO } from './dto/create-room.dto';
-import { Organisation } from 'src/organisations/organisations.entity';
+import { Organisation } from '../organisations/organisations.entity';
 
 @Injectable()
 export class RoomsService {
