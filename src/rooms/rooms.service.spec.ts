@@ -33,7 +33,7 @@ describe('RoomsService', () => {
     expect(repository).toBeDefined();
   });
 
-  describe.only('getRooms', () => {
+  describe('getRooms', () => {
     it('calls RoomRepository.getRooms and returns the result', async () => {
       const result = [];
       const mock = jest.spyOn(repository, 'fetchAll');

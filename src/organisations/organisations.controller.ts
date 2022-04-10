@@ -20,14 +20,14 @@ export class OrganisationsController {
   constructor(private organisationService: OrganisationsService) {}
 
   @Get()
-  getTasks(): Promise<Organisation[]> {
+  getOrganisations(): Promise<Organisation[]> {
     return this.organisationService.fetchAllOrganisations();
   }
 
   @Post()
   @UseGuards(AuthGuard(), RolesGuard)
   @SetMetadata('roles', ['admin'])
-  createTask(
+  createOrganisation(
     @Body() createOrganisationDTO: CreateOrganisationDTO,
   ): Promise<Organisation> {
     return this.organisationService.createOrganisation(createOrganisationDTO);
